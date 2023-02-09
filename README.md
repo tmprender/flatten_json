@@ -38,7 +38,7 @@ data.stuff.type2.details.time=42
 data.otherstuff.list=[[1, 42], [2, 2]]
 ```
 
-# to-do:
+### to-do:
 - implement lists
 - un-reverse output
 - remove continuous print as it recurses
