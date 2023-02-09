@@ -1,6 +1,7 @@
-##Example
+## Example
 
-#json input:
+# json input:
+```
 {
   "data": {
     "stuff": {
@@ -24,8 +25,9 @@
     }
   }
 }
-
-#flattened output:
+```
+# flattened output:
+```
 data.stuff.type1=[{u'id': 1, u'name': u'foo'}, {u'id': 2, u'name': u'bar'}]
 data.stuff.type2.xyz=[-255, 0, 255]
 data.stuff.type2.id=2
@@ -34,9 +36,9 @@ data.stuff.type2.details.lat=0.0
 data.stuff.type2.details.long=0.0
 data.stuff.type2.details.time=42
 data.otherstuff.list=[[1, 42], [2, 2]]
+```
 
-
-#to-do:
+# to-do:
 - implement lists
 - un-reverse output
 - remove continuous print as it recurses
