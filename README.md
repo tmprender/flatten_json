@@ -1,6 +1,6 @@
-## Example
+# Example
 
-# json input:
+### json input:
 ```
 {
   "data": {
@@ -26,7 +26,7 @@
   }
 }
 ```
-# flattened output:
+### flattened output:
 ```
 data.stuff.type1=[{u'id': 1, u'name': u'foo'}, {u'id': 2, u'name': u'bar'}]
 data.stuff.type2.xyz=[-255, 0, 255]
