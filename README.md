@@ -4,47 +4,59 @@
 ```
 {
   "data": {
-    "object": {
-      "A":[
-            {"id":1,"name": "foo"},
-            {"id":2,"name": "bar"}
-          ],
-      "B": {
+    "object": { 
+      "user": {
         "id":2,
-        "xyz": [-255,0,255],
+        "range": [-255,0,255],
         "notation":"big-O",
         "details": {
           "lat":0.000,"long":0.000,"time":42
         }
-      }
+      },
+      "groups":[
+        {"id":1,"name": "foo"},
+        {"id":3,"name": "bar"}
+      ]
     },
     "metdata": {
-      "listOfLists":[
+      "list":[
         [1,42],[2,2]
       ]
     }
-  }
+  },
+  "log":"123abc"
 }
 ```
 ### flattened output:
 ```
-data.object.A[].id=1
-data.object.A[].name=foo
-data.object.A[].id=2
-data.object.A[].name=bar
-data.object.B.xyz[]=-255
-data.object.B.xyz[]=0
-data.object.B.xyz[]=255
-data.object.B.id=2
-data.object.B.notation=big-O
-data.object.B.details.lat=0.0
-data.object.B.details.long=0.0
-data.object.B.details.time=42
-data.metdata.listOfLists[]=[1, 42]
-data.metdata.listOfLists[]=[2, 2]
+data.object.user.range[]=-255
+data.object.user.range[]=0
+data.object.user.range[]=255
+data.object.user.id=2
+data.object.user.notation=big-O
+data.object.user.details.lat=0.0
+data.object.user.details.long=0.0
+data.object.user.details.time=42
+data.object.groups[].id=1
+data.object.groups[].name=foo
+data.object.groups[].id=3
+data.object.groups[].name=bar
+data.metdata.list[]=[1, 42]
+data.metdata.list[]=[2, 2]
+log=123abc
 ```
+
+### use
+`python flatten_json.py filename`
+
+- pipe to grep (find path to value, or all values for a path):
+`python flatten_json.py filename | grep foo`
+`python flatten_json.py filename | grep user.details`
+
+- convert to other file formats (csv), using different delimiter
 
 ### to-do:
 - nested lists, refactor
 - un-reverse output
+- allow for custom delimiter, not just .
  
