@@ -4,12 +4,12 @@
 ```
 {
   "data": {
-    "stuff": {
-      "type1":[
+    "object": {
+      "A":[
             {"id":1,"name": "foo"},
             {"id":2,"name": "bar"}
           ],
-      "type2": {
+      "B": {
         "id":2,
         "xyz": [-255,0,255],
         "notation":"big-O",
@@ -18,8 +18,8 @@
         }
       }
     },
-    "otherstuff": {
-      "list":[
+    "metdata": {
+      "listOfLists":[
         [1,42],[2,2]
       ]
     }
@@ -28,14 +28,20 @@
 ```
 ### flattened output:
 ```
-data.stuff.type1=[{u'id': 1, u'name': u'foo'}, {u'id': 2, u'name': u'bar'}]
-data.stuff.type2.xyz=[-255, 0, 255]
-data.stuff.type2.id=2
-data.stuff.type2.notation=big-O
-data.stuff.type2.details.lat=0.0
-data.stuff.type2.details.long=0.0
-data.stuff.type2.details.time=42
-data.otherstuff.list=[[1, 42], [2, 2]]
+data.object.A[].id=1
+data.object.A[].name=foo
+data.object.A[].id=2
+data.object.A[].name=bar
+data.object.B.xyz[]=-255
+data.object.B.xyz[]=0
+data.object.B.xyz[]=255
+data.object.B.id=2
+data.object.B.notation=big-O
+data.object.B.details.lat=0.0
+data.object.B.details.long=0.0
+data.object.B.details.time=42
+data.metdata.listOfLists[]=[1, 42]
+data.metdata.listOfLists[]=[2, 2]
 ```
 
 ### to-do:
