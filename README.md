@@ -45,7 +45,6 @@ data.metdata.listOfLists[]=[2, 2]
 ```
 
 ### to-do:
-- implement lists
+- nested lists, refactor
 - un-reverse output
-- remove continuous print as it recurses
-
+ 
