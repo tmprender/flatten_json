@@ -15,8 +15,12 @@
       ]
     },
     "metdata": {
-      "list":[
-        [1,42],[2,2]
+      "list":[ 
+        [ [1,42],[2,2] ], 
+        [
+          {"ugly_nest": true}, 
+          {"depth":{"test": true} } 
+        ]
       ]
     }
   },

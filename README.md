@@ -19,8 +19,12 @@
       ]
     },
     "metdata": {
-      "list":[
-        [1,42],[2,2]
+      "list":[ 
+        [ [1,42],[2,2] ], 
+        [
+          {"ugly_nest": true}, 
+          {"depth":{"test": true} } 
+        ]
       ]
     }
   },
@@ -29,10 +33,10 @@
 ```
 ### flattened output:
 ```
+data.object.user.id=2
 data.object.user.range[]=-255
 data.object.user.range[]=0
 data.object.user.range[]=255
-data.object.user.id=2
 data.object.user.notation=big-O
 data.object.user.details.lat=0.0
 data.object.user.details.long=0.0
@@ -42,8 +46,12 @@ data.object.groups[].name=foo
 data.object.groups[].id=3
 data.object.groups[].name=bar
 data.metdata.list[][]=1
+data.metdata.list[][]=42
 data.metdata.list[][]=2
-log=123ab
+data.metdata.list[][]=2
+data.metdata.list[]ugly_nest=True
+data.metdata.list[]depth.test=True
+log=123abc
 ```
 
 ### use
@@ -56,6 +64,5 @@ log=123ab
 - convert to other file formats (csv), using different delimiter
 
 ### to-do:
-- refactor, consolidate
 - allow for custom delimiter
  
