@@ -41,9 +41,9 @@ data.object.groups[].id=1
 data.object.groups[].name=foo
 data.object.groups[].id=3
 data.object.groups[].name=bar
-data.metdata.list[]=[1, 42]
-data.metdata.list[]=[2, 2]
-log=123abc
+data.metdata.list[][]=1
+data.metdata.list[][]=2
+log=123ab
 ```
 
 ### use
@@ -56,7 +56,6 @@ log=123abc
 - convert to other file formats (csv), using different delimiter
 
 ### to-do:
-- nested lists, refactor
-- un-reverse output
-- allow for custom delimiter, not just .
+- refactor, consolidate
+- allow for custom delimiter
  

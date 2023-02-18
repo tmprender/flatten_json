@@ -2,17 +2,28 @@ import sys
 import json
 
 GLOBAL_STRING = ""
+#DELIMITER = .
 
 def parse_json_to_string(json_data, path):
     global GLOBAL_STRING
 
     # base cases
 
-    # if a list is passed directly to method, then return
-    # parser has depth of 1 with nested lists
+    # handle (nested) lists in horrible fashion
     if type(json_data) is list:
-        GLOBAL_STRING += path + "=" + str(json_data) + "\n"
-        return GLOBAL_STRING
+        for i in json_data:
+            if type(i) is dict:
+                # update path indicating list element
+                path +=  key + "[]."      
+                parse_json_to_string(i, path)
+                path = parent
+            elif type(i) is list:
+                path += key + "[]"
+                parse_json_to_string(i, path)
+                path = parent
+            else:
+                GLOBAL_STRING += path + "[]=" + str(i) + "\n"
+                return GLOBAL_STRING
     
     # no (more) keys to parse
     if len(json_data.keys()) < 1:
