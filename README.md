@@ -20,7 +20,7 @@
     },
     "metdata": {
       "list":[ 
-        [ [1,42],[2,2] ], 
+        [ [1,42],[3.14,98.6] ], 
         [
           {"ugly_nest": true}, 
           {"depth":{"test": true} } 
