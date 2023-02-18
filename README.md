@@ -57,11 +57,11 @@ log=123abc
 ### use
 `python flatten_json.py filename`
 
-- pipe to grep (find path to value, or all values for a path):
-`python flatten_json.py filename | grep foo`
-`python flatten_json.py filename | grep user.details`
+pipe to grep (find path to value, or all values for a path):\
+`python flatten_json.py filename | grep foo`\
+`python flatten_json.py filename | grep user.details`\
 
-- convert to other file formats (csv), using different delimiter
+convert to other file formats (csv, LEEF), using different delimiter
 
 ### to-do:
 - allow for custom delimiter
