@@ -17,11 +17,10 @@
     "metdata": {
       "list":[ 
         [ [1,42],[3.14,98.6] ], 
-        [
-          {"ugly_nest": true}, 
-          {"depth":{"test": true} } 
-        ]
-      ]
+        [ 3,6,9, "low" ],
+        [{"x":1,"y":-1}]
+      ],
+      "ugly_nest": {"depth":{"test": true} }
     }
   },
   "log":"123abc"
