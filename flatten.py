@@ -4,12 +4,12 @@ import json
 GLOBAL_STRING = ""
 #DELIMITER = .
 
-def parse_json_to_string(json_data, path):
+def parse_json_to_string(json_data, path, depth=0):
     global GLOBAL_STRING
 
     ### DEBUG ####
     #print("DATA: " + str(json_data) + "\nPATH: " + path)
-  
+
     # handle json {}
     if type(json_data) is dict:
         # base case: no (more) keys to parse
@@ -31,22 +31,27 @@ def parse_json_to_string(json_data, path):
 
             # check for list
             elif type(json_data[key]) is list:
-                # iterate thru elements
-                for i in json_data[key]:
+                # iterate thru elements - multiple counters
+                #outter = 0
+                for idx, i in enumerate(json_data[key]):
                     # check if nested as dict
                     if type(i) is dict:
                         # update path indicating list element
-                        path +=  key + "[]."      
+                        path +=  key + "[" + str(idx) + "]."
                         parse_json_to_string(i, path)
                         path = parent
-                    # nested list?
+                    # nested list
                     elif type(i) is list:
-                        path += key + "[]"
-                        parse_json_to_string(i, path)
+                        #depth = 0
+                        path += key + "[" + str(depth) + "]"
+                        parse_json_to_string(i, path, depth+1)
                         path = parent
+                    # value within a list    
                     else:
-                        GLOBAL_STRING += path + key + "[]="
+                        
+                        GLOBAL_STRING += path + key + "[" + str(depth) + "]="
                         GLOBAL_STRING += str(i) + "\n"
+                        
 
             # not nested, write path.to.key=value pair(s) for this block
             else:
@@ -59,7 +64,8 @@ def parse_json_to_string(json_data, path):
             if type(i) is dict or type(i) is list: 
                 parse_json_to_string(i, path)
             else:
-                GLOBAL_STRING += path + "[]=" + str(i) + "\n"
+                GLOBAL_STRING += path + "[" + str(depth) + "]=" + str(i) + "\n"
+                
                 
     # return to caller
     return GLOBAL_STRING
