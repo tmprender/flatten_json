@@ -69,18 +69,16 @@ log=123abc
 ### Usage
 Pass a JSON string via stdin: 
 
-`python flatten_json.py $(cat example.json)`
-
-OR
-
+`python flatten_json.py $(cat example.json)`\
+or\
 `cat example.json | python flatten.py`
 
 USE CASE: pipe to `grep` to find path.to.value:\
-`python flatten_json.py filename | grep foo`\
+`python flatten_json.py filename | grep foo`
 ```
 data.object.groups[0].name=foo
 ```
-Or, all find values for a path:\
+or, find all find values for a path:\
 `python flatten_json.py filename | grep user.details`
 ```
 data.object.user.details.lat=0.0
@@ -100,12 +98,9 @@ Create an ALIAS for easy use:
 # ADD FOLLOWING LINE IN YOUR ~/.bash_profile
 alias fj="python /path/to/flatten.py"
 ```
-Now you can more simply run... 
-
-`fj $(cat example.json)`
-
-OR
-
+Now you can more simply run... \
+`fj $(cat example.json)`\
+or\
 `cat example.json | fj`
 
 
