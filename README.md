@@ -1,6 +1,12 @@
-# Example
+# Flatten JSON
+*python-based CLI tool for 'flattening' nasty, nested json.*
+
+**ATTENTION:** please let me know if there is a (better) way to do this with native shell commands
+
+## Example
 
 ### json input:
+`$user-shell: cat example.json`
 ```
 {
   "data": {
@@ -22,8 +28,8 @@
       "list":[ 
         [ [1,42],[3.14,98.6] ], 
         [ 3,6,9, "low" ],
-        [{"x":1,"y":-1}]  # this can not be fully parsed by jq
-      ],
+        [{"x":1,"y":-1}]  # this cannot be fully parsed by jq
+      ]
       "ugly_nest": {"depth":{"test": true} }
     }
   },
@@ -32,6 +38,7 @@
 
 ```
 ### flattened output:
+`$user-shell: python flatten.py $(cat example.json)`
 ```
 data.object.user.id=2
 data.object.user.range[0]=-255
@@ -60,14 +67,48 @@ log=123abc
 ```
 
 ### Usage
-`python flatten_json.py filename`
+Pass a JSON string via stdin: 
 
-pipe to grep (find path to value, or all values for a path):\
+`python flatten_json.py $(cat example.json)`
+
+OR
+
+`cat example.json | python flatten.py`
+
+USE CASE: pipe to `grep` to find path.to.value:\
 `python flatten_json.py filename | grep foo`\
+```
+data.object.groups[0].name=foo
+```
+Or, all find values for a path:\
 `python flatten_json.py filename | grep user.details`
+```
+data.object.user.details.lat=0.0
+data.object.user.details.long=0.0
+data.object.user.details.time=42
+```
+
+HINT (and reason for developing): each line returned by `flatten.py` is (read: "should be") a valid `jq` query! Use this tool to flatten JSON output to help find path.to.value for complex queries.
+
+### Getting Started
+`git clone https://github.com/tmprender/flatten_json`
+
+`python path/to/flatten.py $some_json_string`
+
+Create an ALIAS for easy use:
+```
+# ADD FOLLOWING LINE IN YOUR ~/.bash_profile
+alias fj="python /path/to/flatten.py"
+```
+Now you can more simply run... 
+
+`fj $(cat example.json)`
+
+OR
+
+`cat example.json | fj`
 
 
-convert to other file formats (csv, LEEF), using different delimiter
 
 ### To-Do:
 - allow for custom delimiter
