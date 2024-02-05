@@ -40,8 +40,9 @@ user@shell:~$ cat example.json
 ```
 
 ### flattened output:
-`>$user-shell: python flatten.py $(cat example.json)`
-```
+
+```console
+user@shell:~$ python flatten.py $(cat example.json)
 data.object.user.id=1
 data.object.user.range[0]=-255
 data.object.user.range[1]=0
@@ -81,21 +82,15 @@ cat example.json | python flatten.py
 ```
 
 **USE CASE**: pipe to `grep` to find path.to.value:\
-```
-python flatten.py $(cat example.json) | grep foo
-```
-
-```{.no-copy}
+```console
+user@shell:~$ python flatten.py $(cat example.json) | grep foo
 data.object.groups[0].name=foo
 ```
 
 or, find all find values for a path:\
 
-```
-python flatten.py $(cat example.json) | grep user.details
-```
-
-```{.no-copy}
+```console
+user@shell:~$ python flatten.py $(cat example.json) | grep user.details
 data.object.user.details.lat=0.0
 data.object.user.details.long=0.0
 data.object.user.details.time=42
@@ -104,21 +99,13 @@ data.object.user.details.time=42
 > [!TIP] 
 > Each line returned by `flatten.py` is (read: "should be") a valid `jq` query! Use this tool to flatten JSON output to help find path.to.value for complex queries.
 
-```
-python flatten.py $(cat example.json) | grep user.details
-```
-
-```{.no-copy}
+```console
+user@shell:~$ python flatten.py $(cat example.json) | grep user.details
 data.object.user.details.lat=0.0
 data.object.user.details.long=0.0
 data.object.user.details.time=42
-```
 
-```
-cat example.json | jq .data.object.user.details.time
-```
-
-```{.no-copy}
+user@shell:~$cat example.json | jq .data.object.user.details.time
 42
 ```
 
