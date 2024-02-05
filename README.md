@@ -1,7 +1,8 @@
 # Flatten JSON
 *python-based CLI tool for 'flattening' nasty, nested json.*
 
-**ATTENTION:** please let me know if there is a (better) way to do this with native shell commands
+> [!NOTE]
+> **ATTENTION:** please let me know if there is a (better) way to do this with native shell commands
 
 ## Example
 
@@ -70,24 +71,39 @@ log=123abc
 ### Usage
 Pass a JSON string via stdin: 
 
-`python flatten_json.py $(cat example.json)`\
+`python flatten.py $(cat example.json)`\
 or\
 `cat example.json | python flatten.py`
 
-USE CASE: pipe to `grep` to find path.to.value:\
-`python flatten_json.py filename | grep foo`
+**USE CASE**: pipe to `grep` to find path.to.value:\
+`python flatten.py $(cat example.json) | grep foo`
 ```
 data.object.groups[0].name=foo
 ```
 or, find all find values for a path:\
-`python flatten_json.py filename | grep user.details`
+`python flatten.py $(cat example.json) | grep user.details`
 ```
 data.object.user.details.lat=0.0
 data.object.user.details.long=0.0
 data.object.user.details.time=42
 ```
 
-HINT (and reason for developing): each line returned by `flatten.py` is (read: "should be") a valid `jq` query! Use this tool to flatten JSON output to help find path.to.value for complex queries.
+> [!TIP] 
+> Each line returned by `flatten.py` is (read: "should be") a valid `jq` query! Use this tool to flatten JSON output to help find path.to.value for complex queries.
+
+`python flatten.py $(cat example.json) | grep user.details`
+
+```
+data.object.user.details.lat=0.0
+data.object.user.details.long=0.0
+data.object.user.details.time=42
+```
+
+```cat example.json | jq .data.object.user.details.time```
+
+```
+42
+```
 
 ### Getting Started
 `git clone https://github.com/tmprender/flatten_json`
