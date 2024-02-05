@@ -71,18 +71,31 @@ log=123abc
 ### Usage
 Pass a JSON string via stdin: 
 
-`python flatten.py $(cat example.json)`\
-or\
-`cat example.json | python flatten.py`
+```
+python flatten.py $(cat example.json)
+```
+
+or
+```
+cat example.json | python flatten.py
+```
 
 **USE CASE**: pipe to `grep` to find path.to.value:\
-`python flatten.py $(cat example.json) | grep foo`
 ```
+python flatten.py $(cat example.json) | grep foo
+```
+
+```{.no-copy}
 data.object.groups[0].name=foo
 ```
+
 or, find all find values for a path:\
-`python flatten.py $(cat example.json) | grep user.details`
+
 ```
+python flatten.py $(cat example.json) | grep user.details
+```
+
+```{.no-copy}
 data.object.user.details.lat=0.0
 data.object.user.details.long=0.0
 data.object.user.details.time=42
@@ -91,17 +104,21 @@ data.object.user.details.time=42
 > [!TIP] 
 > Each line returned by `flatten.py` is (read: "should be") a valid `jq` query! Use this tool to flatten JSON output to help find path.to.value for complex queries.
 
-`python flatten.py $(cat example.json) | grep user.details`
-
 ```
+python flatten.py $(cat example.json) | grep user.details
+```
+
+```{.no-copy}
 data.object.user.details.lat=0.0
 data.object.user.details.long=0.0
 data.object.user.details.time=42
 ```
 
-```cat example.json | jq .data.object.user.details.time```
-
 ```
+cat example.json | jq .data.object.user.details.time
+```
+
+```{.no-copy}
 42
 ```
 
