@@ -12,7 +12,7 @@
   "data": {
     "object": { 
       "user": {
-        "id":2,
+        "id":1,
         "range": [-255,0,255],
         "notation":"big-O",
         "details": {
@@ -20,16 +20,16 @@
         }
       },
       "groups":[
-        {"id":1,"name": "foo"},
+        {"id":2,"name": "foo"},
         {"id":3,"name": "bar"}
       ]
     },
     "metdata": {
-      "list":[ 
-        [ [1,42],[3.14,98.6] ], 
-        [ 3,6,9, "low" ],
-        [{"x":1,"y":-1}]  # this cannot be fully parsed by jq
-      ]
+      "list": [
+        [ [1,42],[3.14, 98.6] ], 
+        [ 3, 6, 9, "low" ],
+        [{"x":1,"y":-1}]
+      ],
       "ugly_nest": {"depth":{"test": true} }
     }
   },
@@ -37,31 +37,32 @@
 }
 
 ```
+
 ### flattened output:
-`$user-shell: python flatten.py $(cat example.json)`
+`>$user-shell: python flatten.py $(cat example.json)`
 ```
-data.object.user.id=2
+data.object.user.id=1
 data.object.user.range[0]=-255
-data.object.user.range[0]=0
-data.object.user.range[0]=255
+data.object.user.range[1]=0
+data.object.user.range[2]=255
 data.object.user.notation=big-O
 data.object.user.details.lat=0.0
 data.object.user.details.long=0.0
 data.object.user.details.time=42
-data.object.groups[0].id=1
+data.object.groups[0].id=2
 data.object.groups[0].name=foo
 data.object.groups[1].id=3
 data.object.groups[1].name=bar
-data.metdata.list[0][0]=1
-data.metdata.list[0][0]=42
-data.metdata.list[0][0]=3.14
-data.metdata.list[0][0]=98.6
-data.metdata.list[0][1]=3
-data.metdata.list[0][1]=6
-data.metdata.list[0][1]=9
-data.metdata.list[0][1]=low
-data.metdata.list[0]x=1       # does not correspond to a valid jq query
-data.metdata.list[0]y=-1      # ^^
+data.metdata.list[0][0][0]=1
+data.metdata.list[0][0][1]=42
+data.metdata.list[0][0][1][0]=3.14
+data.metdata.list[0][0][1][1]=98.6
+data.metdata.list[1][0]=3
+data.metdata.list[1][1]=6
+data.metdata.list[1][2]=9
+data.metdata.list[1][3]=low
+data.metdata.list[2][].x=1
+data.metdata.list[2][].y=-1
 data.metdata.ugly_nest.depth.test=True
 log=123abc
 ```
@@ -103,8 +104,4 @@ Now you can more simply run... \
 or\
 `cat example.json | fj`
 
-
-
-### To-Do:
-- allow for custom delimiter
  

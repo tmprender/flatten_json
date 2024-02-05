@@ -2,7 +2,7 @@ import sys
 import json
 
 GLOBAL_STRING = ""
-#DELIMITER = .
+DELIM = "."
 
 def parse_json_to_string(json_data, path, depth=0):
     global GLOBAL_STRING
@@ -23,7 +23,7 @@ def parse_json_to_string(json_data, path, depth=0):
             # check for nested json block
             if type(json_data[key]) is dict:
                 # build path.to.key=value as string
-                path += key + "."
+                path += f"{key}{DELIM}"
                 # recurse until value is non-dict
                 parse_json_to_string(json_data[key], path)
                 # reset path for this loop now that method has returned
@@ -32,40 +32,40 @@ def parse_json_to_string(json_data, path, depth=0):
             # check for list
             elif type(json_data[key]) is list:
                 # iterate thru elements - multiple counters
-                #outter = 0
                 for idx, i in enumerate(json_data[key]):
                     # check if nested as dict
                     if type(i) is dict:
                         # update path indicating list element
-                        path +=  key + "[" + str(idx) + "]."
+                        path += f"{key}[{idx}]{DELIM}"
                         parse_json_to_string(i, path)
                         path = parent
                     # nested list
                     elif type(i) is list:
-                        #depth = 0
-                        path += key + "[" + str(depth) + "]"
-                        parse_json_to_string(i, path, depth+1)
+                        
+                        path += f"{key}[{idx}]"
+                        parse_json_to_string(i, path)
                         path = parent
                     # value within a list    
                     else:
-                        
-                        GLOBAL_STRING += path + key + "[" + str(depth) + "]="
-                        GLOBAL_STRING += str(i) + "\n"
+                        GLOBAL_STRING += f"{path}{key}[{idx}]={i}\n"
                         
 
             # not nested, write path.to.key=value pair(s) for this block
             else:
-                GLOBAL_STRING += path + key + "="
-                GLOBAL_STRING += str(json_data[key]) + "\n"
+                GLOBAL_STRING += f"{path}{key}={json_data[key]}\n"
 
     # flatten list []
     elif type(json_data) is list:
-        for i in json_data:
-            if type(i) is dict or type(i) is list: 
+        for idx, i in enumerate(json_data):
+            if type(i) is dict: 
+                path += f"[]{DELIM}"
                 parse_json_to_string(i, path)
-            else:
-                GLOBAL_STRING += path + "[" + str(depth) + "]=" + str(i) + "\n"
+            elif type(i) is list:
+                path += f"[{idx}]"
+                parse_json_to_string(i, path)
                 
+            else:
+                GLOBAL_STRING += f"{path}[{idx}]={i}\n"
                 
     # return to caller
     return GLOBAL_STRING
