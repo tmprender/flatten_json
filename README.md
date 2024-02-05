@@ -7,8 +7,8 @@
 ## Example
 
 ### json input:
-`$user-shell: cat example.json`
-```
+```console
+user@shell:~$ cat example.json
 {
   "data": {
     "object": { 
