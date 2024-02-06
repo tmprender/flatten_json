@@ -3,12 +3,11 @@ import json
 
 GLOBAL_STRING = ""
 DELIM = "."
+# enable FORMAT_JQ to output valid JQ query if DELIM (default=.) is in a key
+FORMAT_JQ = True  
 
-def parse_json_to_string(json_data, path, depth=0):
+def parse_json_to_string(json_data, path):
     global GLOBAL_STRING
-
-    ### DEBUG ####
-    #print("DATA: " + str(json_data) + "\nPATH: " + path)
 
     # handle json {}
     if type(json_data) is dict:
@@ -52,7 +51,13 @@ def parse_json_to_string(json_data, path, depth=0):
 
             # not nested, write path.to.key=value pair(s) for this block
             else:
-                GLOBAL_STRING += f"{path}{key}={json_data[key]}\n"
+                # handle escpaing for DELIM in key
+                value = json_data[key]
+                if DELIM in key and FORMAT_JQ:
+                    key = str(key).replace(DELIM, f"\{DELIM}")
+                    key = f'\\"{key}\\"'
+                
+                GLOBAL_STRING += f"{path}{key}={value}\n"
 
     # flatten list []
     elif type(json_data) is list:
