@@ -6,7 +6,7 @@ DELIM = "."
 # enable FORMAT_JQ to output valid JQ query if DELIM (default=.) is in a key
 FORMAT_JQ = True  
 
-def parse_json_to_string(json_data, path):
+def parse_json_to_string(json_data, path, depth=0):
     global GLOBAL_STRING
 
     # handle json {}
@@ -61,14 +61,18 @@ def parse_json_to_string(json_data, path):
 
     # flatten list []
     elif type(json_data) is list:
+        # store path of current run before updating
+        parent = path
         for idx, i in enumerate(json_data):
             if type(i) is dict: 
-                path += f"[]{DELIM}"
+                path += f"[{depth}]{DELIM}"
+                depth += 1
                 parse_json_to_string(i, path)
+                path = parent
             elif type(i) is list:
                 path += f"[{idx}]"
                 parse_json_to_string(i, path)
-                
+                path = parent
             else:
                 GLOBAL_STRING += f"{path}[{idx}]={i}\n"
                 
