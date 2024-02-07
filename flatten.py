@@ -30,26 +30,29 @@ def parse_json_to_string(json_data, path, depth=0):
 
             # check for list
             elif type(json_data[key]) is list:
-                # iterate thru elements - multiple counters
-                for idx, i in enumerate(json_data[key]):
-                    # check if nested as dict
-                    if type(i) is dict:
-                        # update path indicating list element
-                        path += f"{key}[{idx}]{DELIM}"
-                        parse_json_to_string(i, path)
-                        path = parent
-                    # nested list
-                    elif type(i) is list:
+                
+                parse_list(json_data[key], path, depth)
+                
+                # # iterate thru elements - multiple counters
+                # for idx, i in enumerate(json_data[key]):
+                #     # check if nested as dict
+                #     if type(i) is dict:
+                #         # update path indicating list element
+                #         path += f"{key}[{idx}]{DELIM}"
+                #         parse_json_to_string(i, path)
+                #         path = parent
+                #     # nested list
+                #     elif type(i) is list:
                         
-                        path += f"{key}[{idx}]"
-                        parse_json_to_string(i, path)
-                        path = parent
-                    # value within a list    
-                    else:
-                        GLOBAL_STRING += f"{path}{key}[{idx}]={i}\n"
+                #         path += f"{key}[{idx}]"
+                #         parse_json_to_string(i, path)
+                #         path = parent
+                #     # value within a list    
+                #     else:
+                #         GLOBAL_STRING += f"{path}{key}[{idx}]={i}\n"
                         
 
-            # not nested, write path.to.key=value pair(s) for this block
+            # not nested, write path.to.key=value for this block
             else:
                 # handle escpaing for DELIM in key
                 value = json_data[key]
@@ -61,24 +64,63 @@ def parse_json_to_string(json_data, path, depth=0):
 
     # flatten list []
     elif type(json_data) is list:
-        # store path of current run before updating
-        parent = path
-        for idx, i in enumerate(json_data):
-            if type(i) is dict: 
-                path += f"[{depth}]{DELIM}"
-                depth += 1
-                parse_json_to_string(i, path)
-                path = parent
-            elif type(i) is list:
-                path += f"[{idx}]"
-                parse_json_to_string(i, path)
-                path = parent
-            else:
-                GLOBAL_STRING += f"{path}[{idx}]={i}\n"
-                
+        
+         parse_list(json_data, path, depth)
+        
+        # # store path of current run before updating
+        # parent = path
+        # for idx, i in enumerate(json_data):
+        #     if type(i) is dict: 
+        #         path += f"[{depth}]{DELIM}"
+        #         depth += 1
+        #         parse_json_to_string(i, path)
+        #         path = parent
+        #     elif type(i) is list:
+        #         path += f"[{idx}]"
+        #         parse_json_to_string(i, path)
+        #         path = parent
+        #     else:
+        #         GLOBAL_STRING += f"{path}[{idx}]={i}\n"
+    
+    else:
+        sys.stderr("ERROR: Bad Input - not a dict or list")
+        exit(1)
+
+
     # return to caller
     return GLOBAL_STRING
 
+def parse_list(list_data, path, depth=0):
+    # base case: empty list
+    if len(list_data) < 1:
+        return f"[{depth}]"
+
+    print("DEBUG START path->parent: ", path)
+    # store path
+    parent = path
+
+    # iterate over elements
+    for idx, item in enumerate(list_data):
+        # dict within a list
+        if type(item) is dict:
+            # add path/depth and parse
+            path += f"[{depth}]{DELIM}"
+            print("DEBUG D: ", path)
+            parse_json_to_string(item, path, depth)
+            path = parent
+
+        # list within a list
+        elif type(item) is list:
+            # add path/index and parse
+            path += f"[{idx}]"
+            print("DEBUG L: ", path)
+            parse_list(item, path, depth)
+            path = parent
+
+        # value within a list
+        else:
+            # add path(depth), idx, terminal value
+            return f"{path}[{idx}]={item}"
 
 if __name__ == "__main__":
     # is stdin a terminal? i.e. was last stdout piped here?
