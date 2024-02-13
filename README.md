@@ -3,6 +3,10 @@
 
 > [!NOTE]
 > **ATTENTION:** please let me know if there is a (better) way to do this with native shell commands
+>
+> **UPDATE:** Thank you @bfontaine for sharing [this stackoverflow solution](https://stackoverflow.com/questions/37540717/flatten-nested-json-using-jq) which yields similar flattened output.
+> 
+> `jq '[paths(values) as $path | {"key": $path | join("."), "value": getpath($path)}] | from_entries'`
 
 ## Example
 
