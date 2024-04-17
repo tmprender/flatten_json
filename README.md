@@ -1,5 +1,5 @@
 # Flatten JSON
-*python-based CLI tool for 'flattening' nasty, nested json.*
+*python-based CLI tool for 'flattening' nasty, nested json. Helpful for jq and JSONPath.*
 
 > [!NOTE]
 > **ATTENTION:** please let me know if there is a (better) way to do this with native shell commands
