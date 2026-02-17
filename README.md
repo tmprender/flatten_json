@@ -8,7 +8,7 @@
 > 
 > `jq '[paths(values) as $path | {"key": $path | join("."), "value": getpath($path)}] | from_entries'`
 >
-> **UPDATE:** Thank you [@henrebotha](https://github.com/henrebotha) for sharing [gron](https://github.com/tomnomnom/gron) which does this natively and reverses back to json! (eve more useful for grep ops)
+> **UPDATE:** Thank you [@henrebotha](https://github.com/henrebotha) for sharing [gron](https://github.com/tomnomnom/gron) which does this more robustly and reverses back to json! (even more useful for grep ops)
 > Raised in [Issue #5](https://github.com/tmprender/flatten_json/issues/5#issue-2946775474)
 
 ## Example
