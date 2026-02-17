@@ -4,11 +4,11 @@
 > [!NOTE]
 > **ATTENTION:** please let me know if there is a (better) way to do this with native shell commands
 >
-> **UPDATE:** Thank you @bfontaine for sharing [this stackoverflow solution](https://stackoverflow.com/questions/37540717/flatten-nested-json-using-jq) which yields similar flattened output.
+> **UPDATE:** Thank you [@bfontaine](https://github.com/bfontaine) for sharing [this stackoverflow solution](https://stackoverflow.com/questions/37540717/flatten-nested-json-using-jq) which yields similar flattened output.
 > 
 > `jq '[paths(values) as $path | {"key": $path | join("."), "value": getpath($path)}] | from_entries'`
 >
-> **UPDATE:** Thank you @henrebotha for sharing [gron](https://github.com/tomnomnom/gron) which does this natively and reverses back to json! (eve more useful for grep ops)
+> **UPDATE:** Thank you [@henrebotha](https://github.com/henrebotha) for sharing [gron](https://github.com/tomnomnom/gron) which does this natively and reverses back to json! (eve more useful for grep ops)
 > Raised in [Issue #5](https://github.com/tmprender/flatten_json/issues/5#issue-2946775474)
 
 ## Example
